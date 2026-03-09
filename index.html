@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>KAU Electricidad - Registro de Personal Idóneo</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background-image:url("ChatGPT Image 8 mar 2026, 07_07_15 p.m..jpg");
+background-size:cover;
+background-attachment:fixed;
+color:white;
+}
+
+header{
+background:rgba(0,0,0,0.7);
+padding:20px;
+text-align:center;
+font-size:32px;
+font-weight:bold;
+}
+
+nav{
+background:rgba(0,0,0,0.8);
+padding:15px;
+text-align:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:15px;
+font-size:18px;
+font-weight:bold;
+}
+
+nav a:hover{
+color:#22c55e;
+}
+
+.container{
+width:90%;
+max-width:1000px;
+margin:auto;
+margin-top:40px;
+}
+
+.card{
+background:rgba(20,30,48,0.6);
+padding:25px;
+border-radius:15px;
+backdrop-filter:blur(8px);
+box-shadow:0 10px 30px rgba(0,0,0,0.7);
+margin-bottom:40px;
+}
+
+h2{
+text-align:center;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #555;
+}
+
+th{
+background:rgba(255,255,255,0.1);
+}
+
+input{
+padding:10px;
+border-radius:5px;
+border:none;
+margin-bottom:10px;
+width:100%;
+}
+
+.galeria{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.galeria img{
+width:100%;
+border-radius:10px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.galeria img:hover{
+transform:scale(1.05);
+}
+
+.qr{
+text-align:center;
+margin-top:20px;
+}
+
+#arriba{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#22c55e;
+color:white;
+border:none;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+cursor:pointer;
+display:none;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:rgba(0,0,0,0.8);
+}
+
+.electricidad{
+
+height:5px;
+
+background:linear-gradient(90deg,#00ffff,#22c55e,#00ffff);
+
+background-size:200% 100%;
+
+animation:rayo 2s linear infinite;
+
+}
+
+@keyframes rayo{
+
+0%{
+background-position:0% 0%;
+}
+
+100%{
+background-position:200% 0%;
+}
+
+}
+
+#visor{
+
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+z-index:1000;
+
+}
+
+#visor img{
+
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+
+}
+
+.logo-container{
+position:relative;
+display:inline-block;
+}
+
+.logo{
+width:1000px;
+filter:drop-shadow(0 0 10px white) drop-shadow(0 0 10px white);
+}
+
+.descarga{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+background:linear-gradient(90deg,transparent,rgba(0,255,255,0.4),transparent);
+opacity:0;
+animation:descarga 3s infinite;
+}
+
+@keyframes descarga{
+
+0%{opacity:0;}
+
+50%{opacity:0.4;}
+
+100%{opacity:0;}
+
+}
+
+.chispa{
+
+position:fixed;
+
+width:6px;
+
+height:6px;
+
+background:#00ffff;
+
+border-radius:50%;
+
+pointer-events:none;
+
+animation:chispaAnim 0.6s linear forwards;
+
+}
+
+@keyframes chispaAnim{
+
+0%{
+
+transform:translate(0,0);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translate(var(--x),var(--y));
+
+opacity:0;
+
+}
+
+}
+
+.rayoMouse{
+
+position:fixed;
+width:4px;
+height:4px;
+background:#00ffff;
+border-radius:50%;
+pointer-events:none;
+animation:rayoMouseAnim 0.4s linear forwards;
+
+}
+
+@keyframes rayoMouseAnim{
+
+0%{
+opacity:1;
+transform:scale(1);
+}
+
+100%{
+opacity:0;
+transform:scale(4);
+}
+
+}
+
+.chispa{
+
+position:fixed;
+width:6px;
+height:6px;
+background:#00ffff;
+border-radius:50%;
+pointer-events:none;
+animation:chispaAnim 0.6s linear forwards;
+box-shadow:0 0 6px #00ffff,0 0 12px #00ffff;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="electricidad"></div>
+
+<div class="logo-container">
+
+<img src="ChatGPT Image 8 mar 2026, 11_13_21 p.m. - copia.png" class="logo">
+
+<div class="descarga"></div>
+
+</div>
+
+<div class="electricidad"></div>
+⚡  
+Capacitaciones en Electricidad Domiciliaria ⚡
+</header>
+
+<nav>
+
+<a href="#inicio">Inicio</a>
+<a href="#registro">Registro de Personal Idóneo</a>
+<a href="#galeria">Galería</a>
+<a href="#verificacion">Verificación</a>
+<a href="#contacto">Contacto</a>
+
+</nav>
+
+<div class="container">
+
+<div class="card" id="inicio">
+
+
+<h2>Bienvenido</h2>
+
+<p style="text-align:center"> 
+
+Al centro de capacitación en electricidad domiciliaria.
+
+  
+<h3 style="text-align:center;">Docente a cargo</h3>
+
+<p style="text-align:center"> 
+
+SAURRAL JESÚS EZEQUIEL
+
+
+</p>
+
+</div>
+
+<div class="card" id="registro">
+
+<h2>Registro de Personal Idóneo</h2>
+
+<input type="text" id="buscador" placeholder="Buscar alumno..." onkeyup="buscar()">
+
+<table id="tabla">
+
+<tr>
+
+<th>Nombre</th>
+
+<th>Curso</th>
+
+<th>Fecha</th>
+
+</tr>
+
+<tr>
+
+<td>Rearte Emanuel</td>
+
+<td>Seguridad Eléctrica e instalaciones domiciliarias</td>
+
+<td>29/05/2026</td>
+
+</tr>
+
+<tr>
+
+<td>Miguelito</td>
+
+<td>Instalaciones domiciliarias</td>
+
+<td>29/05/2026</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="card" id="galeria">
+
+<h2>Galería de Capacitaciones</h2>
+
+<div class="galeria">
+
+<img src="1.png" onclick="abrirImagen(this,event)">
+<img src="2.png" onclick="abrirImagen(this,event)">
+<img src="3.png" onclick="abrirImagen(this,event)">
+<img src="4.png" onclick="abrirImagen(this,event)">
+
+
+</div>
+
+</div>
+
+<div class="card" id="verificacion">
+
+<h2>Verificación de Certificados</h2>
+
+<p style="text-align:center">
+Escanee el código QR para acceder al registro oficial de personas capacitadas.
+</p>
+
+<div class="qr">
+
+<img src="qr.png" width="200">
+
+</div>
+
+</div>
+
+</div>
+<div class="card" id="contacto">
+
+<h2>Contacto</h2>
+
+<p style="text-align:center">
+Si desea información sobre capacitaciones puede comunicarse por los siguientes medios:
+</p>
+
+<p style="text-align:center">
+
+📞 Teléfono / WhatsApp: <b> 3804354981 </b><br><br>
+
+📧 Email: <b>jsaurral@hotmail.com</b>
+
+</p>
+
+<p style="text-align:center">
+
+<a href="https://wa.me/5493804354981" target="_blank" style="
+background:#25D366;
+padding:12px 20px;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+">
+
+WhatsApp
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+<button onclick="arriba()" id="arriba">↑</button>
+
+<footer>
+
+KAU Electricidad ⚡  
+Registro de capacitaciones
+
+</footer>
+
+<div id="visor" onclick="cerrarImagen()">
+<img id="imagenGrande">
+</div>
+
+<script>
+
+function buscar(){
+
+let input=document.getElementById("buscador");
+
+let filtro=input.value.toUpperCase();
+
+let tabla=document.getElementById("tabla");
+
+let tr=tabla.getElementsByTagName("tr");
+
+for(let i=1;i<tr.length;i++){
+
+let td=tr[i].getElementsByTagName("td")[0];
+
+if(td){
+
+let txt=td.textContent;
+
+if(txt.toUpperCase().indexOf(filtro)>-1){
+
+tr[i].style.display="";
+
+}else{
+
+tr[i].style.display="none";
+
+}
+
+}
+
+}
+
+}
+
+let boton=document.getElementById("arriba");
+
+window.onscroll=function(){
+
+if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+
+boton.style.display="block";
+
+}else{
+
+boton.style.display="none";
+
+}
+
+};
+
+function arriba(){
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+
+function cerrarImagen(){
+
+document.getElementById("visor").style.display="none";
+
+}
+
+function chispas(x,y){
+
+for(let i=0;i<12;i++){
+
+let chispa=document.createElement("div");
+
+chispa.className="chispa";
+
+document.body.appendChild(chispa);
+
+chispa.style.left=x+"px";
+
+chispa.style.top=y+"px";
+
+let angulo=Math.random()*360;
+
+let distancia=80+Math.random()*40;
+
+chispa.style.setProperty("--x",Math.cos(angulo)*distancia+"px");
+
+chispa.style.setProperty("--y",Math.sin(angulo)*distancia+"px");
+
+setTimeout(()=>{
+
+chispa.remove();
+
+},600);
+
+}
+
+}
+
+function abrirImagen(img,e){
+
+let visor=document.getElementById("visor");
+let grande=document.getElementById("imagenGrande");
+
+grande.src=img.src;
+visor.style.display="flex";
+
+chispas(e.clientX,e.clientY);
+descarga(e.clientX,e.clientY);
+
+}
+
+function chispas(x,y){
+
+for(let i=0;i<12;i++){
+
+let chispa=document.createElement("div");
+chispa.className="chispa";
+
+document.body.appendChild(chispa);
+
+chispa.style.left=x+"px";
+chispa.style.top=y+"px";
+
+let angulo=Math.random()*360;
+let distancia=80+Math.random()*40;
+
+chispa.style.setProperty("--x",Math.cos(angulo)*distancia+"px");
+chispa.style.setProperty("--y",Math.sin(angulo)*distancia+"px");
+
+setTimeout(()=>{
+
+chispa.remove();
+
+},600);
+
+}
+
+}
+
+function rayo(e){
+
+let r=document.createElement("div");
+
+r.className="rayoMouse";
+
+document.body.appendChild(r);
+
+r.style.left=e.clientX+"px";
+r.style.top=e.clientY+"px";
+
+setTimeout(()=>{
+
+r.remove();
+
+},400);
+
+}
+
+function descarga(x,y){
+
+for(let i=0;i<6;i++){
+
+let r=document.createElement("div");
+
+r.className="rayoMouse";
+
+document.body.appendChild(r);
+
+r.style.left=x+"px";
+r.style.top=y+"px";
+
+setTimeout(()=>{
+
+r.remove();
+
+},300);
+
+}
+
+}
+</script>
