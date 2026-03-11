@@ -13,7 +13,10 @@ background-image:url("ChatGPT Image 8 mar 2026, 07_07_15 p.m..jpg");
 background-size:cover;
 background-attachment:fixed;
 color:white;
+overflow-x:hidden;
 }
+
+/* HEADER */
 
 header{
 background:rgba(0,0,0,0.7);
@@ -22,6 +25,42 @@ text-align:center;
 font-size:32px;
 font-weight:bold;
 }
+
+.logo-container{
+position:relative;
+display:inline-block;
+}
+
+.logo{
+width:500px;
+max-width:90%;
+filter:drop-shadow(0 0 15px #00ffff) drop-shadow(0 0 30px #00ffff);
+animation:energia 3s infinite alternate;
+}
+
+@keyframes energia{
+0%{filter:drop-shadow(0 0 10px #00ffff);}
+100%{filter:drop-shadow(0 0 30px #00ffff);}
+}
+
+.descarga{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(0,255,255,0.4),transparent);
+opacity:0;
+animation:descarga 3s infinite;
+}
+
+@keyframes descarga{
+0%{opacity:0;}
+50%{opacity:0.4;}
+100%{opacity:0;}
+}
+
+/* MENU */
 
 nav{
 background:rgba(0,0,0,0.8);
@@ -40,6 +79,8 @@ font-weight:bold;
 nav a:hover{
 color:#22c55e;
 }
+
+/* CONTENEDOR */
 
 .container{
 width:90%;
@@ -60,6 +101,8 @@ margin-bottom:40px;
 h2{
 text-align:center;
 }
+
+/* TABLA */
 
 table{
 width:100%;
@@ -84,6 +127,8 @@ margin-bottom:10px;
 width:100%;
 }
 
+/* GALERIA */
+
 .galeria{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -102,10 +147,35 @@ cursor:pointer;
 transform:scale(1.05);
 }
 
+/* VISOR */
+
+#visor{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+#visor img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+/* QR */
+
 .qr{
 text-align:center;
 margin-top:20px;
 }
+
+/* BOTON ARRIBA */
 
 #arriba{
 position:fixed;
@@ -121,165 +191,94 @@ cursor:pointer;
 display:none;
 }
 
+/* FOOTER */
+
 footer{
 text-align:center;
 padding:20px;
 background:rgba(0,0,0,0.8);
 }
 
-.electricidad{
-
-height:5px;
-
-background:linear-gradient(90deg,#00ffff,#22c55e,#00ffff);
-
-background-size:200% 100%;
-
-animation:rayo 2s linear infinite;
-
-}
-
-@keyframes rayo{
-
-0%{
-background-position:0% 0%;
-}
-
-100%{
-background-position:200% 0%;
-}
-
-}
-
-#visor{
-
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.9);
-justify-content:center;
-align-items:center;
-z-index:1000;
-
-}
-
-#visor img{
-
-max-width:90%;
-max-height:90%;
-border-radius:10px;
-
-}
-
-.logo-container{
-position:relative;
-display:inline-block;
-}
-
-.logo{
-width:1000px;
-filter:drop-shadow(0 0 10px white) drop-shadow(0 0 10px white);
-}
-
-.descarga{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-background:linear-gradient(90deg,transparent,rgba(0,255,255,0.4),transparent);
-opacity:0;
-animation:descarga 3s infinite;
-}
-
-@keyframes descarga{
-
-0%{opacity:0;}
-
-50%{opacity:0.4;}
-
-100%{opacity:0;}
-
-}
+/* CHISPAS */
 
 .chispa{
-
 position:fixed;
-
 width:6px;
-
 height:6px;
-
 background:#00ffff;
-
 border-radius:50%;
-
 pointer-events:none;
-
 animation:chispaAnim 0.6s linear forwards;
-
+box-shadow:0 0 10px #00ffff;
 }
 
 @keyframes chispaAnim{
-
-0%{
-
-transform:translate(0,0);
-
-opacity:1;
-
+0%{transform:translate(0,0);opacity:1;}
+100%{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
-100%{
+/* PARTICULAS ELECTRICAS FONDO */
 
-transform:translate(var(--x),var(--y));
-
-opacity:0;
-
-}
-
-}
-
-.rayoMouse{
-
+.particula{
 position:fixed;
-width:4px;
-height:4px;
+width:3px;
+height:3px;
 background:#00ffff;
 border-radius:50%;
-pointer-events:none;
-animation:rayoMouseAnim 0.4s linear forwards;
+opacity:0.6;
+animation:flotar linear infinite;
+}
+
+@keyframes flotar{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+.examen-box{
+
+max-width:600px;
+margin:60px auto;
+padding:30px;
+
+background:rgba(20,30,48,0.6);
+
+backdrop-filter:blur(8px);
+
+border-radius:15px;
+
+text-align:center;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.7);
 
 }
 
-@keyframes rayoMouseAnim{
+.examen-box p{
 
-0%{
-opacity:1;
-transform:scale(1);
-}
-
-100%{
-opacity:0;
-transform:scale(4);
-}
+font-size:20px;
+margin-bottom:20px;
 
 }
 
-.chispa{
+.examen-box button{
 
-position:fixed;
-width:6px;
-height:6px;
-background:#00ffff;
-border-radius:50%;
-pointer-events:none;
-animation:chispaAnim 0.6s linear forwards;
-box-shadow:0 0 6px #00ffff,0 0 12px #00ffff;
+padding:12px 25px;
+
+font-size:16px;
+
+background:#22c55e;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+.examen-box button:hover{
+
+background:#16a34a;
 
 }
 
@@ -290,8 +289,6 @@ box-shadow:0 0 6px #00ffff,0 0 12px #00ffff;
 
 <header>
 
-<div class="electricidad"></div>
-
 <div class="logo-container">
 
 <img src="ChatGPT Image 8 mar 2026, 11_13_21 p.m. - copia.png" class="logo">
@@ -300,40 +297,46 @@ box-shadow:0 0 6px #00ffff,0 0 12px #00ffff;
 
 </div>
 
-<div class="electricidad"></div>
-⚡  
-Capacitaciones en Electricidad Domiciliaria ⚡
+<br>
+⚡ Capacitaciones en Electricidad Domiciliaria ⚡
+
 </header>
 
 <nav>
-
 <a href="#inicio">Inicio</a>
-<a href="#registro">Registro de Personal Idóneo</a>
+<a href="#registro">Registro</a>
 <a href="#galeria">Galería</a>
 <a href="#verificacion">Verificación</a>
 <a href="#contacto">Contacto</a>
-
 </nav>
+
+
+
+
+<div class="container">
+
+<div class="examen-box">
+
+<p>Realiza el examen profesional de KAU Electricidad</p>
+
+<button onclick="pedirClave()">Comenzar examen</button>
+
+</div>
 
 <div class="container">
 
 <div class="card" id="inicio">
 
-
 <h2>Bienvenido</h2>
 
-<p style="text-align:center"> 
+<p style="text-align:center">
+Centro de capacitación en electricidad domiciliaria.
+</p>
 
-Al centro de capacitación en electricidad domiciliaria.
+<h3 style="text-align:center;">Docente</h3>
 
-  
-<h3 style="text-align:center;">Docente a cargo</h3>
-
-<p style="text-align:center"> 
-
+<p style="text-align:center">
 SAURRAL JESÚS EZEQUIEL
-
-
 </p>
 
 </div>
@@ -347,42 +350,27 @@ SAURRAL JESÚS EZEQUIEL
 <table id="tabla">
 
 <tr>
-
 <th>Nombre</th>
-
 <th>Curso</th>
-
 <th>Fecha</th>
-
 </tr>
 
 <tr>
-
 <td>Rearte Emanuel</td>
-
-<td>Seguridad Eléctrica e instalaciones domiciliarias</td>
-
+<td>Seguridad eléctrica e instalaciones domiciliarias</td>
 <td>29/05/2026</td>
-
 </tr>
 
 <tr>
-
 <td>Miguelito</td>
-
 <td>Instalaciones domiciliarias</td>
-
 <td>29/05/2026</td>
+</tr>
 
-  <tr>
-
-<td>leandro</td>
-
+<tr>
+<td>Leandro</td>
 <td>Instalaciones domiciliarias</td>
-
 <td>29/05/2026</td>
-
-
 </tr>
 
 </table>
@@ -400,7 +388,6 @@ SAURRAL JESÚS EZEQUIEL
 <img src="3.png" onclick="abrirImagen(this,event)">
 <img src="4.png" onclick="abrirImagen(this,event)">
 
-
 </div>
 
 </div>
@@ -410,32 +397,22 @@ SAURRAL JESÚS EZEQUIEL
 <h2>Verificación de Certificados</h2>
 
 <p style="text-align:center">
-Escanee el código QR para acceder al registro oficial de personas capacitadas.
+Escanee el código QR para acceder al registro oficial.
 </p>
 
 <div class="qr">
-
 <img src="qr.png" width="200">
-
 </div>
 
 </div>
 
-</div>
 <div class="card" id="contacto">
 
 <h2>Contacto</h2>
 
 <p style="text-align:center">
-Si desea información sobre capacitaciones puede comunicarse por los siguientes medios:
-</p>
-
-<p style="text-align:center">
-
-📞 Teléfono / WhatsApp: <b> 3804354981 </b><br><br>
-
+📞 WhatsApp: <b>3804354981</b><br><br>
 📧 Email: <b>jsaurral@hotmail.com</b>
-
 </p>
 
 <p style="text-align:center">
@@ -458,13 +435,11 @@ WhatsApp
 </div>
 
 </div>
+
 <button onclick="arriba()" id="arriba">↑</button>
 
 <footer>
-
-KAU Electricidad ⚡  
-Registro de capacitaciones
-
+KAU Electricidad ⚡ Registro de capacitaciones
 </footer>
 
 <div id="visor" onclick="cerrarImagen()">
@@ -473,14 +448,13 @@ Registro de capacitaciones
 
 <script>
 
+/* BUSCADOR */
+
 function buscar(){
 
 let input=document.getElementById("buscador");
-
 let filtro=input.value.toUpperCase();
-
 let tabla=document.getElementById("tabla");
-
 let tr=tabla.getElementsByTagName("tr");
 
 for(let i=1;i<tr.length;i++){
@@ -491,13 +465,8 @@ if(td){
 
 let txt=td.textContent;
 
-if(txt.toUpperCase().indexOf(filtro)>-1){
-
-tr[i].style.display="";
-
-}else{
-
-tr[i].style.display="none";
+tr[i].style.display =
+txt.toUpperCase().indexOf(filtro)>-1 ? "" : "none";
 
 }
 
@@ -505,21 +474,14 @@ tr[i].style.display="none";
 
 }
 
-}
+/* BOTON ARRIBA */
 
 let boton=document.getElementById("arriba");
 
 window.onscroll=function(){
 
-if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
-
-boton.style.display="block";
-
-}else{
-
-boton.style.display="none";
-
-}
+boton.style.display =
+document.documentElement.scrollTop>200 ? "block" : "none";
 
 };
 
@@ -529,44 +491,7 @@ window.scrollTo({top:0,behavior:"smooth"});
 
 }
 
-
-function cerrarImagen(){
-
-document.getElementById("visor").style.display="none";
-
-}
-
-function chispas(x,y){
-
-for(let i=0;i<12;i++){
-
-let chispa=document.createElement("div");
-
-chispa.className="chispa";
-
-document.body.appendChild(chispa);
-
-chispa.style.left=x+"px";
-
-chispa.style.top=y+"px";
-
-let angulo=Math.random()*360;
-
-let distancia=80+Math.random()*40;
-
-chispa.style.setProperty("--x",Math.cos(angulo)*distancia+"px");
-
-chispa.style.setProperty("--y",Math.sin(angulo)*distancia+"px");
-
-setTimeout(()=>{
-
-chispa.remove();
-
-},600);
-
-}
-
-}
+/* VISOR IMAGEN */
 
 function abrirImagen(img,e){
 
@@ -577,9 +502,16 @@ grande.src=img.src;
 visor.style.display="flex";
 
 chispas(e.clientX,e.clientY);
-descarga(e.clientX,e.clientY);
 
 }
+
+function cerrarImagen(){
+
+document.getElementById("visor").style.display="none";
+
+}
+
+/* CHISPAS */
 
 function chispas(x,y){
 
@@ -599,56 +531,46 @@ let distancia=80+Math.random()*40;
 chispa.style.setProperty("--x",Math.cos(angulo)*distancia+"px");
 chispa.style.setProperty("--y",Math.sin(angulo)*distancia+"px");
 
-setTimeout(()=>{
-
-chispa.remove();
-
-},600);
+setTimeout(()=>{chispa.remove();},600);
 
 }
 
 }
 
-function rayo(e){
+/* PARTICULAS ELECTRICAS */
 
-let r=document.createElement("div");
+setInterval(()=>{
 
-r.className="rayoMouse";
+let p=document.createElement("div");
 
-document.body.appendChild(r);
+p.className="particula";
 
-r.style.left=e.clientX+"px";
-r.style.top=e.clientY+"px";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(4+Math.random()*6)+"s";
 
-setTimeout(()=>{
+document.body.appendChild(p);
 
-r.remove();
-
-},400);
-
-}
-
-function descarga(x,y){
-
-for(let i=0;i<6;i++){
-
-let r=document.createElement("div");
-
-r.className="rayoMouse";
-
-document.body.appendChild(r);
-
-r.style.left=x+"px";
-r.style.top=y+"px";
-
-setTimeout(()=>{
-
-r.remove();
+setTimeout(()=>{p.remove();},10000);
 
 },300);
 
+function pedirClave(){
+
+let clave = prompt("Ingrese la contraseña del examen")
+
+if(clave === "electricista2026"){
+
+window.location.href="certificacion-electricidad.html"
+
+}else{
+
+alert("Contraseña incorrecta")
+
 }
 
 }
+
 </script>
 
+</body>
+</html>
