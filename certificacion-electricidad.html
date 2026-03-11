@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Certificación Profesional de Electricidad</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+margin:0;
+}
+
+#registro{
+margin-top:80px;
+}
+
+input{
+padding:10px;
+margin:5px;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:10px 15px;
+border:none;
+background:#22c55e;
+color:white;
+border-radius:6px;
+cursor:pointer;
+margin:5px;
+}
+
+#quiz{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.pregunta{
+background:#1e293b;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+text-align:left;
+}
+
+#panelProfesor{
+display:none;
+margin-top:30px;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+}
+
+td,th{
+border:1px solid white;
+padding:8px;
+}
+
+#revision{
+max-width:900px;
+margin:auto;
+margin-top:20px;
+}
+
+#revision .pregunta{
+border-left:6px solid red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>⚡ Certificación Profesional Electricidad</h1>
+
+<div id="registro">
+
+<input id="nombre" placeholder="Nombre">
+<input id="apellido" placeholder="Apellido">
+
+<br>
+
+<button onclick="iniciar()">Comenzar examen</button> <button onclick="panel()">Panel profesor</button>
+
+</div>
+
+<div id="timer"></div>
+<div id="quiz"></div>
+<div id="resultado"></div>
+<div id="revision"></div>
+
+<button id="btnWhatsapp" onclick="enviarWhatsapp()" style="display:none;">
+Enviar resultado por WhatsApp
+<button id="btnVolver" onclick="volverPagina()" style="display:none;background:#3b82f6;">
+Volver a la página anterior
+</button>
+
+<div id="panelProfesor">
+
+<h2>Panel de Resultados</h2>
+<button onclick="borrarResultados()" style="background:#ef4444;">
+Borrar lista de alumnos
+</button>
+<table>
+
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Puntaje</th>
+<th>Fecha</th>
+</tr>
+</thead>
+
+<tbody id="tablaResultados"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let bancoPreguntas=[
+
+{p:"¿Cuál es la tensión nominal de una red domiciliaria monofásica en Argentina?",
+r:["110V","220V","380V","440V"],c:1},
+
+{p:"¿Qué dispositivo protege contra fugas de corriente a tierra?",
+r:["Interruptor termomagnético","Disyuntor diferencial","Fusible","Contactor"],c:1},
+
+{p:"¿Cuál es la función de una térmica?",
+r:["Medir voltaje","Proteger sobrecarga y cortocircuito","Regular tensión","Detectar fugas"],c:1},
+
+{p:"¿Cuál es la fórmula de la Ley de Ohm?",
+r:["V = I x R","P = V x I","R = P x I","V = P x R"],c:0},
+
+{p:"¿Qué conductor se usa para puesta a tierra?",
+r:["Fase","Neutro","Verde/amarillo","Retorno"],c:2},
+
+{p:"Sección mínima para tomacorrientes domiciliarios:",
+r:["1 mm²","1.5 mm²","2.5 mm²","6 mm²"],c:2},
+
+{p:"Instrumento para medir tensión:",
+r:["Pinza amperimétrica","Multímetro","Megóhmetro","Osciloscopio"],c:1},
+
+{p:"Fase y neutro directo generan:",
+r:["Circuito abierto","Caída de tensión","Cortocircuito","Fuga a tierra"],c:2},
+
+{p:"Tensión entre fases en sistema 380/220:",
+r:["110V","220V","380V","440V"],c:2},
+
+{p:"Conmutada de escalera utiliza:",
+r:["1 interruptor","2 conmutadores","3 térmicas","1 disyuntor"],c:1},
+
+/* NUEVAS PREGUNTAS */
+
+{p:"¿Qué instrumento mide la resistencia de aislamiento?",
+r:["Multímetro","Megóhmetro","Pinza amperimétrica","Voltímetro"],c:1},
+
+{p:"¿Cuál es la unidad de potencia eléctrica?",
+r:["Volt","Ohm","Watt","Ampere"],c:2},
+
+{p:"¿Qué color identifica normalmente al conductor neutro?",
+r:["Rojo","Negro","Azul","Verde"],c:2},
+
+{p:"¿Qué ocurre si la sección del conductor es menor a la necesaria?",
+r:["Mayor eficiencia","Sobrecalentamiento","Menor consumo","Mayor tensión"],c:1},
+
+{p:"¿Cuál es la función del interruptor diferencial?",
+r:["Proteger sobrecarga","Detectar fugas a tierra","Medir tensión","Regular corriente"],c:1},
+
+{p:"¿Qué magnitud mide un amperímetro?",
+r:["Voltaje","Resistencia","Corriente","Potencia"],c:2},
+
+{p:"¿Qué tipo de corriente usan las viviendas?",
+r:["Corriente continua","Corriente alterna","Corriente pulsante","Corriente directa"],c:1},
+
+{p:"¿Cuál es el símbolo de resistencia en un circuito?",
+r:["R","V","A","W"],c:0},
+
+{p:"¿Qué material se usa comúnmente para conductores eléctricos?",
+r:["Hierro","Cobre","Aluminio","Acero"],c:1},
+
+{p:"¿Qué ocurre si aumenta la resistencia en un circuito manteniendo voltaje?",
+r:["Aumenta la corriente","Disminuye la corriente","No cambia","Explota el circuito"],c:1},
+
+{p:"¿Qué dispositivo protege contra cortocircuitos?",
+r:["Térmica","Disyuntor","Voltímetro","Transformador"],c:0},
+
+{p:"¿Cuál es la unidad de resistencia?",
+r:["Volt","Ohm","Watt","Ampere"],c:1},
+
+{p:"¿Qué mide un voltímetro?",
+r:["Corriente","Resistencia","Voltaje","Frecuencia"],c:2},
+
+{p:"Frecuencia de la red eléctrica en Argentina:",
+r:["50 Hz","60 Hz","100 Hz","120 Hz"],c:0},
+
+{p:"¿Qué ocurre en un circuito abierto?",
+r:["Circula corriente","No circula corriente","Hay cortocircuito","Explota"],c:1},
+
+{p:"¿Qué es un conductor eléctrico?",
+r:["Material que impide corriente","Material que permite corriente","Material aislante","Material magnético"],c:1},
+
+{p:"¿Cuál es el símbolo del amperio?",
+r:["A","V","Ω","W"],c:0},
+
+{p:"¿Qué mide una pinza amperimétrica?",
+r:["Voltaje","Corriente","Resistencia","Frecuencia"],c:1},
+
+{p:"¿Qué ocurre si se corta el neutro en una instalación?",
+r:["Todo funciona igual","Puede haber sobretensión","Baja la corriente","Nada ocurre"],c:1},
+
+{p:"¿Qué dispositivo se usa para automatizar circuitos eléctricos?",
+r:["Contactor","Fusible","Interruptor","Cable"],c:0}
+
+]
+
+let examen=[]
+let alumno=""
+let tiempo=900
+let resultadoFinal=""
+let examenFinalizado=false
+
+function iniciar(){
+
+let nombre=document.getElementById("nombre").value
+let apellido=document.getElementById("apellido").value
+
+if(nombre=="" || apellido==""){
+alert("Ingrese nombre y apellido")
+return
+}
+
+alumno=nombre+" "+apellido
+
+document.getElementById("registro").style.display="none"
+
+generarExamen()
+temporizador()
+
+}
+
+function generarExamen(){
+
+examen=[]
+let copia=[...bancoPreguntas]
+
+for(let i=0;i<10;i++){
+
+let r=Math.floor(Math.random()*copia.length)
+examen.push(copia[r])
+copia.splice(r,1)
+
+}
+
+mostrar()
+
+}
+
+function mostrar(){
+
+let cont=document.getElementById("quiz")
+cont.innerHTML=""
+
+examen.forEach((q,i)=>{
+
+let html="<div class='pregunta'>"
+html+="<p>"+q.p+"</p>"
+
+q.r.forEach((op,j)=>{
+
+html+=`<label>
+<input type="radio" name="p${i}" value="${j}">
+${op}
+</label><br>`
+
+})
+
+html+="</div>"
+
+cont.innerHTML+=html
+
+})
+
+cont.innerHTML+="<button onclick='corregir()'>Finalizar examen</button>"
+
+}
+
+function temporizador(){
+
+let t=setInterval(()=>{
+
+if(examenFinalizado){
+clearInterval(t)
+return
+}
+
+let m=Math.floor(tiempo/60)
+let s=tiempo%60
+
+document.getElementById("timer").innerHTML="Tiempo: "+m+":"+s
+
+tiempo--
+
+if(tiempo<0){
+
+clearInterval(t)
+corregir()
+
+}
+
+},1000)
+
+}
+
+function corregir(){
+
+if(examenFinalizado) return
+examenFinalizado=true
+
+let puntos=0
+let revisionHTML="<h2>Revisión de respuestas</h2>"
+
+examen.forEach((q,i)=>{
+
+let sel=document.querySelector(`input[name=p${i}]:checked`)
+let respuestaAlumno = sel ? parseInt(sel.value) : -1
+
+if(respuestaAlumno===q.c){
+
+puntos++
+
+}else{
+
+revisionHTML+="<div class='pregunta'>"
+revisionHTML+="<p><b>"+q.p+"</b></p>"
+
+if(respuestaAlumno==-1){
+revisionHTML+="Tu respuesta: No respondida<br>"
+}else{
+revisionHTML+="Tu respuesta: "+q.r[respuestaAlumno]+"<br>"
+}
+
+revisionHTML+="Respuesta correcta: <b>"+q.r[q.c]+"</b>"
+revisionHTML+="</div>"
+
+}
+
+})
+
+let porcentaje=(puntos/examen.length)*100
+
+resultadoFinal="Resultado: "+puntos+"/10 ("+porcentaje+"%)"
+
+document.getElementById("resultado").innerHTML=resultadoFinal
+document.getElementById("revision").innerHTML=revisionHTML
+
+document.getElementById("btnWhatsapp").style.display="inline-block"
+document.getElementById("btnVolver").style.display="inline-block"
+
+guardarResultado(puntos)
+
+}
+
+function guardarResultado(p){
+
+let lista=JSON.parse(localStorage.getItem("resultados"))||[]
+
+lista.push({
+alumno:alumno,
+puntaje:p,
+fecha:new Date().toLocaleDateString()
+})
+
+localStorage.setItem("resultados",JSON.stringify(lista))
+
+}
+
+function panel(){
+
+let pass=prompt("Contraseña profesor")
+
+if(pass!=="kau123") return
+
+document.getElementById("panelProfesor").style.display="block"
+
+let lista=JSON.parse(localStorage.getItem("resultados"))||[]
+let html=""
+
+lista.forEach(r=>{
+
+html+=`<tr>
+<td>${r.alumno}</td>
+<td>${r.puntaje}/10</td>
+<td>${r.fecha}</td>
+</tr>`
+
+})
+
+document.getElementById("tablaResultados").innerHTML=html
+
+}
+
+function enviarWhatsapp(){
+
+let mensaje="Resultado examen electricidad:%0A"
+mensaje+="Alumno: "+alumno+"%0A"
+mensaje+=resultadoFinal
+
+let url="https://wa.me/5493804354981?text="+mensaje
+
+window.open(url,"_blank")
+
+}
+
+window.onbeforeunload=function(){
+
+if(!examenFinalizado){
+corregir()
+}
+
+}
+
+document.addEventListener("visibilitychange",function(){
+
+if(document.hidden && !examenFinalizado){
+corregir()
+}
+
+})
+function borrarResultados(){
+
+let confirmar = confirm("¿Seguro que desea borrar todos los resultados?")
+
+if(!confirmar) return
+
+localStorage.removeItem("resultados")
+
+document.getElementById("tablaResultados").innerHTML=""
+
+alert("Lista de alumnos eliminada")
+
+}
+function volverPagina(){
+
+history.back()
+
+}
+</script>
+
+</body>
+</html>
