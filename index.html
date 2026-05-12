@@ -168,6 +168,34 @@ max-height:90%;
 border-radius:10px;
 }
 
+/* BOTONES VISOR */
+
+.nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.5);
+border:none;
+color:white;
+font-size:40px;
+padding:15px;
+cursor:pointer;
+border-radius:10px;
+z-index:1001;
+transition:0.3s;
+}
+
+.nav:hover{
+background:rgba(0,255,255,0.4);
+}
+
+.prev{
+left:20px;
+}
+
+.next{
+right:20px;
+}
 /* QR */
 
 .qr{
@@ -454,7 +482,13 @@ KAU Electricidad ⚡ Registro de capacitaciones
 </footer>
 
 <div id="visor" onclick="cerrarImagen()">
+
+<button class="nav prev" onclick="anteriorImagen(event)">❮</button>
+
 <img id="imagenGrande">
+
+<button class="nav next" onclick="siguienteImagen(event)">❯</button>
+
 </div>
 
 <script>
@@ -502,14 +536,28 @@ window.scrollTo({top:0,behavior:"smooth"});
 
 }
 
-/* VISOR IMAGEN */
+/* VISOR IMAGEN CON NAVEGACION */
+
+let imagenes = document.querySelectorAll(".galeria img");
+let imagenActual = 0;
 
 function abrirImagen(img,e){
 
 let visor=document.getElementById("visor");
 let grande=document.getElementById("imagenGrande");
 
-grande.src=img.src;
+for(let i=0;i<imagenes.length;i++){
+
+if(imagenes[i] === img){
+
+imagenActual = i;
+break;
+
+}
+
+}
+
+grande.src=imagenes[imagenActual].src;
 visor.style.display="flex";
 
 chispas(e.clientX,e.clientY);
@@ -521,6 +569,69 @@ function cerrarImagen(){
 document.getElementById("visor").style.display="none";
 
 }
+
+function siguienteImagen(e){
+
+e.stopPropagation();
+
+imagenActual++;
+
+if(imagenActual >= imagenes.length){
+
+imagenActual = 0;
+
+}
+
+document.getElementById("imagenGrande").src =
+imagenes[imagenActual].src;
+
+}
+
+function anteriorImagen(e){
+
+e.stopPropagation();
+
+imagenActual--;
+
+if(imagenActual < 0){
+
+imagenActual = imagenes.length - 1;
+
+}
+
+document.getElementById("imagenGrande").src =
+imagenes[imagenActual].src;
+
+}
+/* TECLADO */
+
+document.addEventListener("keydown",function(e){
+
+let visor=document.getElementById("visor");
+
+if(visor.style.display==="flex"){
+
+if(e.key==="ArrowRight"){
+
+siguienteImagen(e);
+
+}
+
+if(e.key==="ArrowLeft"){
+
+anteriorImagen(e);
+
+}
+
+if(e.key==="Escape"){
+
+cerrarImagen();
+
+}
+
+}
+
+});
 
 /* CHISPAS */
 
