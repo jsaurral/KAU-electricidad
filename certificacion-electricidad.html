@@ -423,21 +423,7 @@ window.open(url,"_blank")
 
 }
 
-window.onbeforeunload=function(){
 
-if(!examenFinalizado){
-corregir()
-}
-
-}
-
-document.addEventListener("visibilitychange",function(){
-
-if(document.hidden && !examenFinalizado){
-corregir()
-}
-
-})
 function borrarResultados(){
 
 let confirmar = confirm("¿Seguro que desea borrar todos los resultados?")
